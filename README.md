@@ -26,18 +26,21 @@ Create a container for the toasts to appear in:
 <ul class="notifications"></ul>
 ```
 
-Display toasts with default messages:
+Display toasts:
 ```js
-toasty.info();      // "info"
-toasty.success();   // "success"
-toasty.warning();   // "warning"
-toasty.error();     // "error"
-```
-
-Display toasts with messages:
-```js
+// Display with a message
 toasty.info("👋🏾 Hello");
 toasty.success("😊 Yay!");
-toasty.error("😨 Oh no!");
 toasty.warning("😟 Careful...");
+toasty.error("😨 Oh no!");
+
+// Display with the default message ("info", "success", etc...)
+toasty.info();
+
+// Update the default message
+toasty.settings.info.defaultText = "a lot of info";
+toasty.info();
+
+// Display with inverted colors
+toasty.info("hello", { inverted: true });
 ```

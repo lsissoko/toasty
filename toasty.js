@@ -1,8 +1,8 @@
 const toasty = {
-  success: (message) => createToast("success", message),
-  error: (message) => createToast("error", message),
-  warning: (message) => createToast("warning", message),
-  info: (message) => createToast("info", message),
+  success: (message, options) => createToast("success", message, options),
+  error: (message, options) => createToast("error", message, options),
+  warning: (message, options) => createToast("warning", message, options),
+  info: (message, options) => createToast("info", message, options),
   settings: {
     timer: 5000,
     success: { icon: "fa-circle-check", defaultText: "success" },
@@ -12,13 +12,14 @@ const toasty = {
   }
 };
 
-function createToast(id, message) {
+function createToast(id, message, options) {
   const { icon, defaultText } = toasty.settings[id];
   const text = message?.length ? message : defaultText;
+  const invertedClass = options?.inverted ? "inverted" : "";
 
   const elem = document.createElement("li");
   elem.timeoutId = setTimeout(() => removeToast(elem), toasty.settings.timer);
-  elem.className = `toast ${id}`;
+  elem.className = `toast ${id} ${invertedClass}`;
   elem.innerHTML =
     `<div class="column">
        <i class="fa-solid ${icon}"></i>

@@ -17,10 +17,13 @@
     const num = parseInt(raw);
     if (isNaN(num)) {
       toasty.error(`"${raw}" is not a number`);
+      toasty.error(`"${raw}" is not a number`, { inverted: true });
     } else if (num > 100) {
       toasty.warning(`${num} is greater than 100`);
+      toasty.warning(`${num} is greater than 100`, { inverted: true });
     } else {
       toasty.success(`${num} is valid`);
+      toasty.success(`${num} is valid`, { inverted: true });
     }
   }
 </script>
