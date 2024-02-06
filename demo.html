@@ -1,25 +1,26 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <title>Toast Notification In Javascript</title>
-    <link rel="stylesheet" href="../toasty.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Font Awesome icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-    />
-    <script src="../toasty.js" defer></script>
-  </head>
-  <body>
-    <ul class="notifications"></ul>
-    <div class="buttons">
-      <button class="btn" id="error">Error</button>
-      <button class="btn" id="warning">Warning</button>
-      <button class="btn" id="info">Info</button>
-      <button class="btn" id="success">Success</button>
-      <button class="btn" id="random">Random</button>
-    </div>
-  </body>
-</html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="toasty.css" />
+<script src="toasty.js"></script>
+
+<ul class="notifications"></ul>
+
+<div style="text-align:center;">
+  <div style="padding-top:100px;">
+    <input id="num1" type="text" placeholder="Enter a number <= 100">
+    <button id="btn1" onclick="getNumber()">Enter</button>
+  </div>
+</div>
+
+<script>
+  function getNumber() {
+    const raw = document.getElementById("num1").value;
+    const num = parseInt(raw);
+    if (isNaN(num)) {
+      toasty.error(`"${raw}" is not a number`);
+    } else if (num > 100) {
+      toasty.warning(`${num} is greater than 100`);
+    } else {
+      toasty.success(`${num} is valid`);
+    }
+  }
+</script>

@@ -1,49 +1,36 @@
-const notifications = document.querySelector(".notifications"),
-  buttons = document.querySelectorAll(".buttons .btn")
+const toasty = {
+  success: (message) => createToast("success", message),
+  error: (message) => createToast("error", message),
+  warning: (message) => createToast("warning", message),
+  info: (message) => createToast("info", message),
+  settings: {
+    timer: 5000,
+    success: { icon: "fa-circle-check", defaultText: "success" },
+    error: { icon: "fa-circle-xmark", defaultText: "error" },
+    warning: { icon: "fa-triangle-exclamation", defaultText: "warning" },
+    info: { icon: "fa-circle-info", defaultText: "info" },
+  }
+};
 
-const toastDetails = {
-  timer: 5000,
-  success: {
-    icon: "fa-circle-check",
-    text: "Hello World: This is a success toast.",
-  },
-  error: {
-    icon: "fa-circle-xmark",
-    text: "Hello World: This is an error toast.",
-  },
-  warning: {
-    icon: "fa-triangle-exclamation",
-    text: "Hello World: This is a warning toast.",
-  },
-  info: {
-    icon: "fa-circle-info",
-    text: "Hello World: This is an information toast.",
-  },
-  random: {
-    icon: "fa-solid fa-star",
-    text: "Hello World: This is a random toast.",
-  },
+function createToast(id, message) {
+  const { icon, defaultText } = toasty.settings[id];
+  const text = message?.length ? message : defaultText;
+
+  const elem = document.createElement("li");
+  elem.timeoutId = setTimeout(() => removeToast(elem), toasty.settings.timer);
+  elem.className = `toast ${id}`;
+  elem.innerHTML =
+    `<div class="column">
+       <i class="fa-solid ${icon}"></i>
+       <span>${text}</span>
+    </div>
+    <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+
+  document.querySelector(".notifications").appendChild(elem);
 }
 
-const removeToast = (toast) => {
-  toast.classList.add("hide")
-  if (toast.timeoutId) clearTimeout(toast.timeoutId)
-  setTimeout(() => toast.remove(), 500)
+function removeToast(elem) {
+  elem.classList.add("hide");
+  if (elem.timeoutId) clearTimeout(elem.timeoutId);
+  setTimeout(() => elem.remove(), 500);
 }
-
-const createToast = (id) => {
-  const { icon, text } = toastDetails[id]
-  const toast = document.createElement("li")
-  toast.className = `toast ${id}`
-  toast.innerHTML = `<div class="column">
-                         <i class="fa-solid ${icon}"></i>
-                         <span>${text}</span>
-                      </div>
-                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`
-  notifications.appendChild(toast)
-  toast.timeoutId = setTimeout(() => removeToast(toast), toastDetails.timer)
-}
-
-buttons.forEach((btn) => {
-  btn.addEventListener("click", () => createToast(btn.id))
-})
